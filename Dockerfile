@@ -12,6 +12,14 @@ RUN  echo "deb http://ports.ubuntu.com/ubuntu-ports xenial main universe" > /etc
 RUN  apt-get install -y python-pip mopidy build-essential libxml2-dev libxslt1-dev zlib1g-dev \
                      gstreamer1.0-plugins-base gstreamer1.0-plugins-bad gstreamer1.0-plugins-good gstreamer1.0-plugins-ugly
 
+ENV DEBIAN_FRONTEND noninteractive
+
+RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && \
+    locale-gen en_US.UTF-8 && \
+    dpkg-reconfigure locales && \
+    /usr/sbin/update-locale LANG=en_US.UTF-8
+ENV LC_ALL en_US.UTF-8
+
 RUN  pip install Mopidy-TuneIn Mopidy-Dirble Mopidy-Mobile
 
 COPY mopidy.conf /root/.config/mopidy_default.conf
