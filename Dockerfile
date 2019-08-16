@@ -1,10 +1,10 @@
-FROM multiarch/ubuntu-debootstrap:armhf-xenial-slim
+FROM ubuntu:xenial
 
-RUN  echo "deb http://ports.ubuntu.com/ubuntu-ports xenial main universe" > /etc/apt/sources.list && \
-     echo "deb http://ports.ubuntu.com/ubuntu-ports xenial-updates main universe" >> /etc/apt/sources.list && \
-     echo "deb http://ports.ubuntu.com/ubuntu-ports xenial-security main universe" >> /etc/apt/sources.list && \
-     apt-get update && \
-     apt-get install -y wget ca-certificates && \
+#RUN  echo "deb http://ports.ubuntu.com/ubuntu-ports xenial main universe" > /etc/apt/sources.list && \
+#     echo "deb http://ports.ubuntu.com/ubuntu-ports xenial-updates main universe" >> /etc/apt/sources.list && \
+#     echo "deb http://ports.ubuntu.com/ubuntu-ports xenial-security main universe" >> /etc/apt/sources.list && \
+RUN  apt-get update && \
+     apt-get install -y wget ca-certificates locales && \
      wget -q -O - https://apt.mopidy.com/mopidy.gpg | apt-key add - && \
      wget -q -O /etc/apt/sources.list.d/mopidy.list https://apt.mopidy.com/stretch.list && \
      apt-get update

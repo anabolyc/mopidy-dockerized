@@ -1,2 +1,2 @@
-andreymalyshenko/mopidy:armhf
+andreymalyshenko/mopidy:latest
 
