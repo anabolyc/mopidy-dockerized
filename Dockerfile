@@ -1,18 +1,12 @@
-FROM ubuntu:xenial
-
-#RUN  echo "deb http://ports.ubuntu.com/ubuntu-ports xenial main universe" > /etc/apt/sources.list && \
-#     echo "deb http://ports.ubuntu.com/ubuntu-ports xenial-updates main universe" >> /etc/apt/sources.list && \
-#     echo "deb http://ports.ubuntu.com/ubuntu-ports xenial-security main universe" >> /etc/apt/sources.list && \
-RUN  apt-get update && \
-     apt-get install -y wget ca-certificates locales && \
-     wget -q -O - https://apt.mopidy.com/mopidy.gpg | apt-key add - && \
-     wget -q -O /etc/apt/sources.list.d/mopidy.list https://apt.mopidy.com/stretch.list && \
-     apt-get update
-
-RUN  apt-get install -y python-pip mopidy build-essential libxml2-dev libxslt1-dev zlib1g-dev \
-                     gstreamer1.0-plugins-base gstreamer1.0-plugins-bad gstreamer1.0-plugins-good gstreamer1.0-plugins-ugly
+FROM debian:buster-slim
 
 ENV DEBIAN_FRONTEND noninteractive
+
+RUN  apt-get update && \
+     apt-get install -y wget apt-transport-https ca-certificates locales gnupg && \
+     wget -q -O - https://apt.mopidy.com/mopidy.gpg | apt-key add - && \
+     wget -q -O /etc/apt/sources.list.d/mopidy.list https://apt.mopidy.com/mopidy.list && \
+     apt-get update
 
 RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && \
     locale-gen en_US.UTF-8 && \
@@ -20,7 +14,12 @@ RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && \
     /usr/sbin/update-locale LANG=en_US.UTF-8
 ENV LC_ALL en_US.UTF-8
 
-RUN  pip install Mopidy-TuneIn Mopidy-Dirble Mopidy-Mobile
+RUN  apt-get install -y build-essential libxml2-dev gstreamer1.0-plugins-base gstreamer1.0-plugins-bad gstreamer1.0-plugins-good
+# libxslt1-dev zlib1g-dev \
+
+RUN  apt-get install -y python-pip mopidy && \
+    pip install Mopidy-TuneIn Mopidy-Mobile 
+        # Mopidy-GMusic Mopidy-YouTube  
 
 COPY mopidy.conf /root/.config/mopidy_default.conf
 COPY mopidy.sh /usr/local/bin/mopidy.sh

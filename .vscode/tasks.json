@@ -1,0 +1,54 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "config builder",
+            "type": "shell",
+            "group": "build",
+            "command": "docker run --rm --privileged docker/binfmt:a7996909642ee92942dcd6cff44b9b95f08dad64 && docker buildx rm mybuilder && docker buildx create --name mybuilder && docker buildx use mybuilder && docker buildx inspect --bootstrap"
+        },
+        {
+            "label": "docker build",
+            "type": "shell",
+            "command": "docker build -t $(cat tag) .",
+            "group": "build"
+        },
+        {
+            "label": "docker buildx & push",
+            "type": "shell",
+            "command": "docker buildx build --platform linux/arm/v7,linux/amd64 --load --tag $(cat tag) .",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "docker buildx & push",
+            "type": "shell",
+            "command": "docker buildx build --platform linux/arm/v7,linux/amd64 -t $(cat tag) . --push",
+            "group": "build"
+        },
+        {
+            "label": "docker run",
+            "type": "shell",
+            "command": "docker run --name mopidy-instance-dev --rm -ti -v /data/muzlo:/media:ro -p 6680:6680 -e PULSE_SERVER=192.168.1.80 $(cat tag)"
+        },
+        {
+            "label": "docker run bash",
+            "type": "shell",
+            "command": "docker run --rm -ti --entrypoint=/bin/bash $(cat tag)"
+        },
+        {
+            "label": "docker attach",
+            "type": "shell",
+            "command": "docker exec -ti mopidy-instance-dev /bin/bash"
+        },
+        {
+            "label": "docker push",
+            "type": "shell",
+            "command": "docker push $(cat tag)"
+        }
+    ]
+}
