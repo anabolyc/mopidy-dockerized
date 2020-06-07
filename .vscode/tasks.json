@@ -4,51 +4,59 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "config builder",
+            "label": "config buildx",
             "type": "shell",
             "group": "build",
-            "command": "docker run --rm --privileged docker/binfmt:a7996909642ee92942dcd6cff44b9b95f08dad64 && docker buildx rm mybuilder && docker buildx create --name mybuilder && docker buildx use mybuilder && docker buildx inspect --bootstrap"
+            "command": "docker run --rm --privileged docker/binfmt:a7996909642ee92942dcd6cff44b9b95f08dad64 && docker buildx rm mybuilder && docker buildx create --name mybuilder && docker buildx use mybuilder && docker buildx inspect --bootstrap",
+            "problemMatcher": []
         },
         {
             "label": "docker build",
             "type": "shell",
             "command": "docker build -t $(cat tag) .",
-            "group": "build"
+            "group": "build",
+            "problemMatcher": []
         },
         {
-            "label": "docker buildx & push",
+            "label": "docker buildx & load",
             "type": "shell",
             "command": "docker buildx build --platform linux/arm/v7,linux/amd64 --load --tag $(cat tag) .",
             "group": {
                 "kind": "build",
                 "isDefault": true
-            }
+            },
+            "problemMatcher": []
         },
         {
             "label": "docker buildx & push",
             "type": "shell",
-            "command": "docker buildx build --platform linux/arm/v7,linux/amd64 -t $(cat tag) . --push",
-            "group": "build"
+            "command": "docker buildx build --squash --platform linux/arm/v7,linux/amd64 -t $(cat tag) . --push",
+            "group": "build",
+            "problemMatcher": []
         },
         {
             "label": "docker run",
             "type": "shell",
-            "command": "docker run --name mopidy-instance-dev --rm -ti -v /data/muzlo:/media:ro -p 6680:6680 -e PULSE_SERVER=192.168.1.80 $(cat tag)"
+            "command": "docker run --name mopidy-instance-dev --rm -ti -v /mnt/cifs//muzlo:/media:ro -p 6680:6680 -e PULSE_SERVER=192.168.1.85 $(cat tag)",
+            "problemMatcher": []
         },
         {
             "label": "docker run bash",
             "type": "shell",
-            "command": "docker run --rm -ti --entrypoint=/bin/bash $(cat tag)"
+            "command": "docker run --rm -ti --entrypoint=/bin/bash $(cat tag)",
+            "problemMatcher": []
         },
         {
             "label": "docker attach",
             "type": "shell",
-            "command": "docker exec -ti mopidy-instance-dev /bin/bash"
+            "command": "docker exec -ti mopidy-instance-dev /bin/bash",
+            "problemMatcher": []
         },
         {
             "label": "docker push",
             "type": "shell",
-            "command": "docker push $(cat tag)"
+            "command": "docker push $(cat tag)",
+            "problemMatcher": []
         }
     ]
 }

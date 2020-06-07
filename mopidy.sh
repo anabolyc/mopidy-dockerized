@@ -10,4 +10,6 @@ if [ -n "$PULSE_SERVER" ]; then
     sed -i "s/PULSE_SERVER/${PULSE_SERVER}/" /root/.config/mopidy/mopidy.conf
 fi
 
+python --version
+
 exec mopidy
