@@ -1,2 +1,1 @@
 andreymalyshenko/mopidy:latest
-
