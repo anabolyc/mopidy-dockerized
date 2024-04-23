@@ -1,4 +1,4 @@
-FROM python:3.8-slim-bullseye
+FROM python:3.10.14-slim-bullseye
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -15,7 +15,7 @@ ENV LC_ALL en_US.UTF-8
 RUN  apt-get install -y cmake gstreamer1.0-pulseaudio gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gir1.2-gst-plugins-base-1.0 gir1.2-gstreamer-1.0 \
      libcairo2-dev libjpeg-dev libgif-dev libgirepository1.0-dev \
      python3-gst-1.0 python3-tornado python3-pkg-resources python3-pykka python3-requests python3-pip && \
-     pip install PyGObject Mopidy Mopidy-Mobile Mopidy-MusicBox-Webclient Mopidy-TuneIn Mopidy-MPD Mopidy-Bandcamp Mopidy-InternetArchive Mopidy-Podcast-iTunes youtube-dl ytmusicapi Mopidy-YouTube Mopidy-SomaFM && \
+     pip install PyGObject Mopidy Mopidy-Mobile Mopidy-MusicBox-Webclient Mopidy-TuneIn Mopidy-MPD Mopidy-Bandcamp Mopidy-InternetArchive youtube-dl ytmusicapi Mopidy-YouTube Mopidy-SomaFM && \
      apt-get purge -y libcairo2-dev libjpeg-dev libgif-dev libgirepository1.0-dev python3-pip cmake && \
      apt-get autoremove -y && \
      apt-get autoclean -y
