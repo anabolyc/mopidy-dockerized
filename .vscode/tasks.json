@@ -39,7 +39,7 @@
         {
             "label": "docker run",
             "type": "shell",
-            "command": "docker run --name mopidy-dev --rm -ti -v /mnt-auto/cifs/muzlo:/mopidy/media:ro -p 6600:6600 -p 6680:6680 -e AUDIO_OUTPUT=\"pulsesink server=192.168.1.85\" -e MOPIDY_PARAMS=\"-o audio/mixer_volume=50 -o audio/mixer=software\" $(cat tag)",
+            "command": "docker run --name mopidy-dev --rm -ti -v /mnt-auto/cifs/muzlo:/mopidy/media:ro -p 6600:6600 -p 6680:6680 -e MOPIDY_PARAMS=\"-o audio/mixer_volume=50 -o audio/mixer=software\" $(cat tag)",
             "problemMatcher": []
         },
         {
