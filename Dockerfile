@@ -27,4 +27,4 @@ ENV MOPIDY_PARAMS=""
 
 EXPOSE 6600 6680
 
-CMD ["mopidy", "--config", "/mopidy/config/mopidy.conf", "-o", "audio/output=\"$AUDIO_OUTPUT\"", "$MOPIDY_PARAMS"]`
+CMD mopidy --config /mopidy/config/mopidy.conf -o audio/output="$AUDIO_OUTPUT" $MOPIDY_PARAMS`
