@@ -28,7 +28,6 @@ RUN  pip install \
      ytmusicapi \
      Mopidy-YouTube \ 
      Mopidy-SomaFM \
-     Mopidy-RadioNet \
      Mopidy-RadioBrowser \
      PyGObject==3.50.0 && \
      apt-get purge -y libcairo2-dev libjpeg-dev libgif-dev python3-pip cmake
